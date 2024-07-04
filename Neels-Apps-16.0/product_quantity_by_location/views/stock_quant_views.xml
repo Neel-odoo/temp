@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="products_quantity_by_locations_tree_view_pos" model="ir.ui.view">
+        <field name="name">products.quantity.by.locations.tree.view.pos</field>
+        <field name="model">quant.report.custom</field>
+        <field name="arch" type="xml">
+            <tree create="0" delete="0">
+                <field name="product_id"/>
+                <field name="product_categ_id"/>
+                <field name="location_id"/>
+                <field name="on_hand_quantity" />
+                <button name="action_open_stock_move_lines" type="object" class="btn btn-secondary" icon="fa-bars" string="History of Onhand"/>
+                <field name="unposted_pos_quantity"/>
+                <field name="available_quantity"/>
+                <field name="quantity_in_transit"/>
+                <field name="expected_quantity"/>
+                <button name="action_open_transfers" type="object" class="btn btn-secondary fa o_external_button fa-arrow-right" help="Show Pending Transfers"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="products_quantity_by_locations_tree_view_stock" model="ir.ui.view">
+        <field name="name">products.quantity.by.locations.tree.view.stock</field>
+        <field name="model">quant.report.custom</field>
+        <field name="arch" type="xml">
+            <tree create="0" delete="0">
+                <field name="product_id"/>
+                <field name="product_categ_id"/>
+                <field name="location_id"/>
+                <field name="on_hand_quantity"/>
+                <field name="standard_price"/>
+                <field name="stock_value"/>
+                <button name="action_open_transfers" type="object" class="btn btn-secondary fa o_external_button fa-arrow-right" help="Show Pending Transfers"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="products_quantity_by_locations_search_view" model="ir.ui.view">
+        <field name="name">products.quantity.by.locations.search.view</field>
+        <field name="model">quant.report.custom</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id" string="Product"/>
+                <field name="product_categ_id" string="Product Category"/>
+                <field name="location_id" string="Location"/>
+                <group expand="1" string="Group By">
+                    <filter string="Product Category" name="product_categ_id" context="{'group_by': 'product_categ_id'}" />
+                    <filter string="Product" name="product_id" context="{'group_by': 'product_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_products_quantity_by_locations_pos" model="ir.actions.act_window">
+        <field name="name">Products Quantity By Locations</field>
+        <field name="res_model">quant.report.custom</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="product_quantity_by_location.products_quantity_by_locations_tree_view_pos"/>
+        <field name="context">{'group_by': ['product_categ_id']}</field>
+    </record>
+
+    <menuitem
+        id="products_quantity_by_locations_pos"
+        name="Products Quantity By Locations"
+        action="action_products_quantity_by_locations_pos"
+        parent="point_of_sale.pos_config_menu_catalog"
+        sequence="250"
+        />
+
+    <record id="action_products_quantity_by_locations_stock" model="ir.actions.act_window">
+        <field name="name">Products Quantity By Locations</field>
+        <field name="res_model">quant.report.custom</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="product_quantity_by_location.products_quantity_by_locations_tree_view_stock"/>
+        <field name="context">{'group_by': ['product_categ_id']}</field>
+    </record>
+
+    <menuitem
+        id="products_quantity_by_locations_stock"
+        name="Products Quantity By Locations"
+        action="action_products_quantity_by_locations_stock"
+        parent="stock.menu_stock_inventory_control"
+        sequence="250"
+        />
+</odoo>

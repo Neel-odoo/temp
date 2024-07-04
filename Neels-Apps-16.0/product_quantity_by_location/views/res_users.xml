@@ -1,0 +1,24 @@
+<odoo>
+    <record id="view_users_form_report_location" model="ir.ui.view">
+        <field name="name">res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='access_rights']/group[1]/field[@name='companies_count']" position="after">
+                <field name="report_location_ids" widget="many2many_tags" />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_users_tree_report_location" model="ir.ui.view">
+        <field name="name">res.users.tree.inherit</field>
+        <field name="model">res.users</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="base.view_users_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='login_date']" position="after">
+                <field name="report_location_ids" widget="many2many_tags" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
